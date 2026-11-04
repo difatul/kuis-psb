@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kamu Cocok di Jurusan Apa?</title>
+<style>
+:root{--blue:#1d4ed8;--blue2:#1e3a8a;--yel:#facc15;--bg:#f2f7ff;--line:#d6e2fb;--tx:#0f1f45;--mut:#51607f}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(135deg,#38bdf8,#818cf8,#f472b6,#facc15,#34d399,#38bdf8);background-size:400% 400%;animation:bg 18s ease infinite;color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh;display:flex;justify-content:center;padding:16px}
+.wrap{width:100%;max-width:640px;position:relative;z-index:1}
+.top{background:var(--blue);color:#fff;border-radius:18px 18px 0 0;padding:16px 22px;border-bottom:5px solid var(--yel);font-weight:700;letter-spacing:.3px}
+.card{background:#fff;border:1px solid var(--line);border-top:0;border-radius:0 0 18px 18px;padding:22px;box-shadow:0 8px 24px rgba(29,78,216,.1)}
+h1{font-size:1.55rem;line-height:1.25;margin:.2em 0 .4em;color:var(--blue2)}
+h1 mark{background:linear-gradient(transparent 55%,var(--yel) 55%);color:inherit;padding:0 2px}
+p{color:var(--mut);line-height:1.5}
+.tag{color:var(--blue);font-weight:700;font-size:.85rem}
+label{display:block;font-size:.85rem;color:var(--mut);margin:14px 0 6px}
+input{width:100%;padding:13px;border-radius:10px;border:2px solid var(--line);background:#fff;color:var(--tx);font-size:1rem}
+input:focus{outline:0;border-color:var(--blue)}
+button{cursor:pointer;font:inherit}
+.btn{width:100%;margin-top:18px;padding:14px;border:0;border-radius:12px;background:var(--blue);color:#fff;font-weight:700;font-size:1rem;box-shadow:0 4px 0 var(--blue2)}
+.btn:active{transform:translateY(2px);box-shadow:0 2px 0 var(--blue2)}
+.btn.yel{background:var(--yel);color:#3b2f00;box-shadow:0 4px 0 #ca9f00}
+.btn.sec{background:#fff;color:var(--blue);border:2px solid var(--line);box-shadow:none;margin-top:10px}
+.opt{display:block;width:100%;text-align:left;margin-top:10px;padding:14px;border-radius:12px;border:2px solid var(--line);background:#fff;color:var(--tx);font-size:1rem}
+.opt:hover,.opt:active{border-color:var(--blue);background:#eef4ff}
+.bar{height:8px;background:var(--line);border-radius:8px;overflow:hidden;margin-bottom:16px}
+.bar i{display:block;height:100%;width:0;background:var(--yel);transition:width .3s}
+.hide{display:none}
+.big{font-size:3rem;line-height:1}
+.jur{background:#eef4ff;border:2px solid var(--blue);border-radius:14px;padding:14px;margin:12px 0;text-align:center}
+.jur h1{margin:.1em 0}
+.m{display:flex;align-items:center;gap:8px;margin:7px 0;font-size:.85rem;color:var(--mut)}
+.m span:first-child{width:92px;text-align:left}
+.m div{flex:1;height:12px;background:var(--line);border-radius:8px;overflow:hidden}
+.m i{display:block;height:100%;background:var(--blue)}
+.m.top i{background:var(--yel)}
+.m b{width:38px;text-align:right;color:var(--tx)}
+.prof{border:2px solid var(--line);border-radius:14px;padding:14px;margin-top:10px;text-align:left}
+.prof h2{margin:.1em 0;font-size:1.25rem;color:var(--blue2)}
+.res-list{padding-left:18px;color:var(--mut);line-height:1.6;margin:6px 0 0}
+.chips span{display:inline-block;background:#fff8d6;border:1px solid var(--yel);border-radius:20px;padding:6px 12px;margin:4px 4px 0 0;font-size:.9rem;color:#5b4700}
+.sec-t{margin:16px 0 4px;font-weight:700;color:var(--blue);font-size:.9rem;text-align:left}
+.foot{text-align:center;font-size:.9rem;color:#fff;font-weight:600;text-shadow:0 1px 4px rgba(0,0,0,.45);margin-top:14px}
+@keyframes bg{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes naik{0%{transform:translateY(0) rotate(0);opacity:0}10%{opacity:.75}90%{opacity:.75}100%{transform:translateY(-115vh) rotate(360deg);opacity:0}}
+.fl{position:fixed;bottom:-70px;z-index:0;pointer-events:none;animation:naik linear infinite}
+#mus{position:fixed;right:14px;bottom:14px;z-index:60;width:50px;height:50px;border-radius:50%;border:3px solid #fff;background:var(--blue);color:#fff;font-size:1.3rem;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+.opt:nth-child(1){border-left:8px solid #38bdf8}.opt:nth-child(2){border-left:8px solid #f472b6}.opt:nth-child(3){border-left:8px solid #34d399}.opt:nth-child(4){border-left:8px solid #fb923c}
+.jur{background:linear-gradient(135deg,#e0f2fe,#fef9c3,#fce7f3)}
+@media(prefers-reduced-motion:reduce){body,.fl{animation:none}}
+#pv{position:fixed;inset:0;background:#fff;z-index:50;overflow:auto;padding:16px}
+#pv .tools{max-width:760px;margin:0 auto 12px;display:flex;gap:8px}
+#pv .tools button{flex:1;padding:12px;border:0;border-radius:10px;font-weight:700;background:var(--blue);color:#fff}
+#pv .tools button.sec{background:#fff;color:var(--blue);border:2px solid var(--line)}
+#pv .sheet{max-width:760px;margin:0 auto;border:2px solid var(--blue);border-radius:14px;overflow:hidden}
+#pv .sh{background:var(--blue);color:#fff;padding:16px 20px;border-bottom:6px solid var(--yel)}
+#pv .sh b{display:block;font-size:1.2rem;color:var(--yel)}
+#pv .sb{padding:16px 20px}
+#pv table{width:100%;border-collapse:collapse;margin-bottom:12px}
+#pv td{padding:5px 0;vertical-align:top}#pv td:first-child{width:130px;color:var(--mut)}
+@media print{@page{size:A4;margin:1cm}body{background:#fff!important;animation:none;padding:0;display:block}.fl,#mus{display:none!important}.wrap{display:none}#pv{position:static;padding:0;overflow:visible}#pv .tools{display:none}#pv .sheet{max-width:none}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+.kds{display:none}
+#pv .tools{flex-wrap:wrap}#pv .tools button{min-width:140px}
+.kd{width:10.5cm;height:14.85cm;border:.08cm solid var(--blue);overflow:hidden;display:flex;flex-direction:column;background:#fff;color:var(--tx);box-sizing:border-box}
+.kd .h{background:var(--blue);color:#fff;padding:.3cm .4cm;border-bottom:.15cm solid var(--yel);text-align:center}
+.kd .h b{display:block;color:var(--yel);font-size:.55cm}.kd .h span{font-size:.32cm}
+.kd .b{flex:1;padding:.35cm .5cm;display:flex;flex-direction:column;justify-content:space-between}
+.kd .nm{font-size:.75cm;font-weight:900;color:var(--blue2);line-height:1.1;word-break:break-word}
+.kd .sk{font-size:.36cm;color:var(--mut)}
+.kd .jr{background:linear-gradient(135deg,#e0f2fe,#fef9c3,#fce7f3);border:.05cm solid var(--blue);border-radius:.3cm;padding:.25cm;text-align:center}
+.kd .jr i{font-style:normal;font-size:1cm;display:block;line-height:1.2}.kd .jr b{font-size:.46cm;color:var(--blue2);line-height:1.2}
+.kd .pf{font-size:.42cm}.kd .pf b{color:var(--blue2)}.kd .pf.s{font-size:.3cm;color:var(--mut)}
+.kd .m{font-size:.3cm;margin:.05cm 0;gap:.2cm}.kd .m span:first-child{width:2.4cm}.kd .m div{height:.24cm}.kd .m b{width:1cm}
+.kd .f{background:var(--yel);color:var(--blue2);text-align:center;font-weight:800;font-size:.34cm;padding:.2cm}
+@media print{#kprev,#pvnote{display:none!important}.kds{display:grid;grid-template-columns:repeat(2,10.5cm);grid-auto-rows:14.85cm;justify-content:center;align-content:start}.kds.one{grid-template-columns:10.5cm}.kd{-webkit-print-color-adjust:exact;print-color-adjust:exact;break-inside:avoid}}
+@media(min-width:900px){.wrap{max-width:760px}body{font-size:18px}h1{font-size:1.9rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top" id="brand">PENERIMAAN SISWA BARU</div>
+
+<div id="s-start" class="card">
+  <div class="tag">KUIS SERU</div>
+  <h1>Kamu Cocok di <mark>Jurusan Apa?</mark></h1>
+  <p>Jawab 8 pertanyaan singkat. Hasilnya langsung tampil: jurusan dan profesi yang paling pas untukmu.</p>
+  <label for="nama">Nama kamu</label>
+  <input id="nama" placeholder="Contoh: Aisyah" autocomplete="off">
+  <label for="sekolah">Asal sekolah</label>
+  <input id="sekolah" placeholder="Contoh: SMPN 1 Gresik" autocomplete="off">
+  <button class="btn" id="mulai">Mulai Kuis</button>
+</div>
+
+<div id="s-quiz" class="card hide">
+  <div class="bar"><i id="prog"></i></div>
+  <div class="tag" id="qno"></div>
+  <h1 id="qtxt" style="font-size:1.3rem"></h1>
+  <div id="opts"></div>
+</div>
+
+<div id="s-res" class="card hide" style="text-align:center">
+  <div class="tag">HASIL KAMU</div>
+  <p id="rhello" style="margin:6px 0 0"></p>
+  <div class="jur">
+    <div class="big" id="jemoji"></div>
+    <h1 id="jname"></h1>
+    <p id="jdesc" style="margin:0"></p>
+  </div>
+  <div id="meter"></div>
+  <div class="sec-t">PROFESI YANG PALING COCOK UNTUKMU</div>
+  <div class="prof">
+    <div class="big" id="pemoji" style="font-size:2.2rem"></div>
+    <h2 id="ptitle"></h2>
+    <p id="pdesc" style="margin:4px 0"></p>
+    <ul class="res-list" id="plist"></ul>
+  </div>
+  <div class="sec-t">KAMU JUGA COCOK JADI</div>
+  <div class="chips" id="others" style="text-align:left"></div>
+  <div class="sec-t">SETELAH LULUS</div>
+  <p id="jprospek" style="margin:0;text-align:left"></p>
+  <button class="btn yel" id="wa">Kirim hasil ke panitia via WhatsApp</button>
+  <button class="btn sec" id="cetak">Cetak hasil</button>
+  <button class="btn sec" id="export">Export Kartu (A6)</button>
+  <button class="btn sec" id="ulang">Peserta berikutnya</button>
+</div>
+
+<div class="foot">Hari ini kamu coba, besok kamu yang wujudkan.</div>
+</div>
+
+<button id="mus" title="Musik">🔊</button>
+<div id="pv" class="hide"></div>
+
+<script>
+// ====== UBAH BAGIAN INI ======
+var WA_NUMBER = "6285733179260";
+var SCHOOL_NAME = "SMK Maskumambang 2 Dukun Gresik";
+// =============================
+
+document.getElementById("brand").textContent = SCHOOL_NAME + " · PSB 2027/2028";
+
+var J = {
+  rpl:{e:"💻",n:"Rekayasa Perangkat Lunak",s:"RPL",
+    d:"Kamu suka teknologi, logika, dan membuat sesuatu yang bisa dipakai banyak orang.",
+    p:"Bisa bekerja sebagai developer atau staf IT, menerima proyek freelance, atau lanjut kuliah Informatika dan Sistem Informasi."},
+  bdp:{e:"🛍️",n:"Bisnis Daring dan Pemasaran",s:"Bisnis Daring",
+    d:"Kamu pandai melihat peluang, suka berkomunikasi, dan kreatif mengajak orang tertarik.",
+    p:"Bisa memulai usaha online sendiri, bekerja di bagian pemasaran atau toko online, atau lanjut kuliah Manajemen dan Bisnis Digital."},
+  far:{e:"💊",n:"Layanan Penunjang Farmasi Klinis dan Komunitas",s:"Farmasi",
+    d:"Kamu teliti, peduli pada orang lain, dan senang membantu menjaga kesehatan masyarakat.",
+    p:"Bisa bekerja di apotek, klinik, rumah sakit, atau distributor obat, atau lanjut kuliah Farmasi dan bidang kesehatan."}
+};
+
+var P = {
+  game:{j:"rpl",e:"🎮",t:"Game Developer",d:"Kreatif dan senang membuat dunia sendiri.",l:["Membuat game sederhana","Logika dan algoritma","Desain karakter dan level"]},
+  web:{j:"rpl",e:"🌐",t:"Web Developer",d:"Rapi dan suka membuat sesuatu yang bisa diakses lewat internet.",l:["HTML, CSS, JavaScript","Website sekolah dan UMKM","Database"]},
+  app:{j:"rpl",e:"📱",t:"Mobile App Developer",d:"Ingin karyamu ada di genggaman banyak orang.",l:["Membuat aplikasi Android","Fitur kamera dan notifikasi","Menerbitkan aplikasi"]},
+  ux:{j:"rpl",e:"🎨",t:"UI/UX Designer",d:"Punya mata desain dan peduli kenyamanan pengguna.",l:["Desain tampilan aplikasi","Prototipe","Riset kebutuhan pengguna"]},
+  iot:{j:"rpl",e:"🤖",t:"IoT & Robotics Engineer",d:"Penasaran bagaimana benda bisa menjadi pintar.",l:["Mikrokontroler (Arduino, ESP32)","Sensor dan kontrol alat","Prototipe alat pintar"]},
+  seller:{j:"bdp",e:"🏪",t:"Pebisnis Online",d:"Berjiwa wirausaha dan senang melihat produk laris.",l:["Membuka toko di marketplace","Mengelola stok dan harga","Melayani pembeli"]},
+  mkt:{j:"bdp",e:"📣",t:"Digital Marketer",d:"Pandai menyusun strategi agar produk dikenal banyak orang.",l:["Strategi promosi dan iklan digital","Membaca data penjualan","Merancang kampanye"]},
+  konten:{j:"bdp",e:"🎬",t:"Kreator Konten Digital",d:"Kreatif membuat desain, video, dan tulisan yang menarik.",l:["Desain poster dan konten promosi","Penulisan caption dan naskah","Penyuntingan video dan grafis"]},
+  cs:{j:"bdp",e:"🎧",t:"Admin & Layanan Pelanggan Online",d:"Ramah, sabar, dan senang melayani orang.",l:["Menjawab pertanyaan pembeli","Mengelola pesanan dan pengiriman","Menjaga kepuasan pelanggan"]},
+  apt:{j:"far",e:"💊",t:"Tenaga Kefarmasian Apotek",d:"Peduli pada orang lain dan senang membantu mereka mendapat obat yang tepat.",l:["Pelayanan obat di apotek","Membaca dan menyiapkan resep","Memberi informasi penggunaan obat"]},
+  klin:{j:"far",e:"🏥",t:"Penunjang Farmasi Klinik & Rumah Sakit",d:"Sabar, teliti, dan nyaman bekerja membantu tenaga kesehatan.",l:["Menyiapkan perbekalan farmasi","Membantu pelayanan di klinik","Pencatatan dan pelaporan"]},
+  gdg:{j:"far",e:"📦",t:"Pengelola Perbekalan & Gudang Obat",d:"Sangat teliti, rapi, dan tidak suka ada yang salah.",l:["Pengelolaan stok obat","Pencatatan masuk dan keluar","Penyimpanan sesuai aturan"]},
+  prod:{j:"far",e:"🧪",t:"Staf Produksi Sediaan Farmasi",d:"Suka sains, teliti menakar, dan senang membuat sesuatu dengan tepat.",l:["Penimbangan dan peracikan","Kebersihan dan keamanan kerja","Pengendalian mutu dasar"]}
+};
+
+var Q = [
+  {q:"Waktu luang, kamu paling suka...",o:[["Main game dan berpikir “andai aku yang bikin”","game"],["Cari barang bagus dan diskon, atau jualan online","seller"],["Baca soal kesehatan, obat, atau herbal","apt"],["Bikin desain, video, atau tulisan","konten"]]},
+  {q:"Teman-temanmu biasanya minta tolong untuk...",o:[["Memperbaiki HP, laptop, atau aplikasi","app"],["Memilihkan barang atau menawar harga","seller"],["Memberi tahu obat atau tips kesehatan","apt"],["Membuat poster atau kata-kata menarik","konten"]]},
+  {q:"Pekerjaan impian yang paling membuatmu semangat...",o:[["Membuat game atau aplikasi","game"],["Punya toko online sendiri","seller"],["Bekerja di klinik atau rumah sakit membantu orang sehat","klin"],["Mengatur iklan agar produk laris","mkt"]]},
+  {q:"Kegiatan yang paling kamu nikmati...",o:[["Menyusun logika, kode, atau rangkaian alat","iot"],["Menghitung untung-rugi dan merencanakan promosi","mkt"],["Menakar, mencatat, dan mencocokkan dengan teliti","prod"],["Berbicara dan melayani orang dengan ramah","cs"]]},
+  {q:"Pelajaran favoritmu...",o:[["Matematika dan Informatika","web"],["IPA (kimia dan biologi)","prod"],["Ekonomi dan Bahasa","mkt"],["Seni dan desain","ux"]]},
+  {q:"Sifat yang paling menggambarkanmu...",o:[["Penasaran bagaimana teknologi bekerja","iot"],["Teliti dan hati-hati, tidak mau ada yang salah","gdg"],["Pandai membujuk dan meyakinkan","mkt"],["Sabar dan peduli pada orang lain","klin"]]},
+  {q:"Kalau ada masalah, kamu biasanya...",o:[["Mencari penyebabnya sampai ketemu","web"],["Menenangkan dan membantu orang yang kesulitan","cs"],["Merapikan dan mencatat supaya tidak terulang","gdg"],["Mencoba ide baru yang kreatif","konten"]]},
+  {q:"Karya yang paling membuatmu bangga...",o:[["Aplikasi atau website dipakai banyak orang","app"],["Produkku laris terjual","seller"],["Orang terbantu mendapat obat yang tepat","apt"],["Desain tampilanku dipuji orang","ux"]]}
+];
+
+var $ = function(id){return document.getElementById(id)};
+var idx=0, ps={}, nama="", sekolah="";
+
+function show(id){["s-start","s-quiz","s-res"].forEach(function(s){$(s).classList.toggle("hide",s!==id)});window.scrollTo(0,0)}
+
+function render(){
+  var q=Q[idx];
+  $("qno").textContent="Pertanyaan "+(idx+1)+" dari "+Q.length;
+  $("qtxt").textContent=q.q;
+  $("prog").style.width=(idx/Q.length*100)+"%";
+  $("opts").innerHTML="";
+  q.o.forEach(function(o){
+    var b=document.createElement("button");
+    b.className="opt";b.textContent=o[0];
+    b.onclick=function(){sfx([76,84]);ps[o[1]]=(ps[o[1]]||0)+1;idx++;idx<Q.length?render():finish()};
+    $("opts").appendChild(b);
+  });
+}
+
+function finish(){
+  var js={rpl:0,bdp:0,far:0};
+  Object.keys(ps).forEach(function(k){js[P[k].j]+=ps[k]});
+  var bj="rpl";
+  ["rpl","bdp","far"].forEach(function(k){if(js[k]>js[bj])bj=k});
+  var keys=Object.keys(P);
+  var bp=null;
+  keys.forEach(function(k){if(P[k].j===bj&&(bp===null||(ps[k]||0)>(ps[bp]||0)))bp=k});
+  var others=keys.filter(function(k){return k!==bp&&(ps[k]||0)>0})
+    .sort(function(a,b){return (ps[b]||0)-(ps[a]||0)}).slice(0,2);
+
+  var jj=J[bj], pp=P[bp];
+  last={jj:jj,pp:pp,js:js,others:others};
+  $("rhello").textContent=nama+", jurusan yang paling cocok untukmu:";
+  $("jemoji").textContent=jj.e;
+  $("jname").textContent=jj.n;
+  $("jdesc").textContent=jj.d;
+  $("meter").innerHTML=["rpl","bdp","far"].map(function(k){
+    var pct=Math.round(js[k]/Q.length*100);
+    return '<div class="m'+(k===bj?' top':'')+'"><span>'+J[k].s+'</span><div><i style="width:'+pct+'%"></i></div><b>'+pct+'%</b></div>';
+  }).join("");
+  $("pemoji").textContent=pp.e;
+  $("ptitle").textContent=pp.t;
+  $("pdesc").textContent=pp.d;
+  $("plist").innerHTML=pp.l.map(function(x){return "<li>"+x+"</li>"}).join("");
+  $("others").innerHTML=others.length?others.map(function(k){return "<span>"+P[k].e+" "+P[k].t+"</span>"}).join(""):"<span>Coba ulangi kuis untuk melihat pilihan lain</span>";
+  $("jprospek").textContent=jj.p;
+
+  var teks="Hasil kuis PSB: "+nama+" ("+sekolah+") cocok di jurusan "+jj.n+", profesi "+pp.t+". Saya tertarik info lebih lanjut tentang "+SCHOOL_NAME+".";
+  $("wa").onclick=function(){window.open("https://wa.me/"+WA_NUMBER+"?text="+encodeURIComponent(teks),"_blank")};
+  show("s-res");sfx([72,76,79,84,88]);
+}
+
+$("mulai").onclick=function(){
+  nama=$("nama").value.trim();sekolah=$("sekolah").value.trim();
+  if(!nama||!sekolah){alert("Isi nama dan asal sekolah dulu ya!");return}
+  idx=0;ps={};render();show("s-quiz");
+};
+var printed=false;
+window.addEventListener("beforeprint",function(){printed=true});
+function bukaTab(){
+  try{
+    var w=window.open("","_blank");
+    if(!w)return false;
+    w.document.write('<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><title>Hasil Kuis PSB</title><style>'+document.getElementsByTagName("style")[0].textContent+($("pgstyle")?$("pgstyle").textContent:"")+'.kds{display:grid!important}</style></head><body><div id="pv">'+($("pv").querySelector(".sheet")||$("kprint")).outerHTML+'</div><script>window.onload=function(){setTimeout(function(){window.print()},300)}<\/script></body></html>');
+    w.document.close();return true;
+  }catch(e){return false}
+}
+function doPrint(){
+  printed=false;
+  try{window.print()}catch(e){}
+  setTimeout(function(){
+    if(!printed){var n=$("pvnote");if(n)n.style.display="block";bukaTab()}
+  },800);
+}
+
+/* ===== MUSIK CERIA (dibuat dengan Web Audio, tanpa file) ===== */
+var AC=null,master=null,timer=null,step=0,nextT=0,musicOn=true,started=false;
+var CH=[[60,64,67],[57,60,64],[53,57,60],[55,59,62]];
+var MEL=[76,0,79,0,84,0,79,0,81,0,76,0,72,0,76,0,77,0,81,0,84,0,81,0,79,0,83,0,86,0,83,0];
+function hz(m){return 440*Math.pow(2,(m-69)/12)}
+function nt(m,t,d,type,v){
+  var o=AC.createOscillator(),g=AC.createGain();
+  o.type=type;o.frequency.value=hz(m);
+  g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(v,t+0.01);g.gain.exponentialRampToValueAtTime(0.0001,t+d);
+  o.connect(g);g.connect(master);o.start(t);o.stop(t+d+0.05);
+}
+function stepPlay(s,t){
+  var c=CH[Math.floor(s/8)],i=s%8;
+  nt(c[[0,1,2,1,0,1,2,1][i]],t,0.18,"triangle",0.10);
+  if(i===0||i===4)nt(c[0]-12,t,0.30,"sine",0.22);
+  if(MEL[s])nt(MEL[s],t,0.28,"square",0.05);
+}
+function sched(){while(nextT<AC.currentTime+0.25){stepPlay(step,nextT);nextT+=0.22;step=(step+1)%32}}
+function musik(on){
+  musicOn=on;
+  try{
+    if(!AC){var C=window.AudioContext||window.webkitAudioContext;if(!C)return;AC=new C();master=AC.createGain();master.gain.value=0.6;master.connect(AC.destination)}
+    if(AC.state==="suspended")AC.resume();
+    clearInterval(timer);
+    if(on){nextT=AC.currentTime+0.05;timer=setInterval(sched,60)}
+  }catch(e){}
+  $("mus").textContent=on?"🔊":"🔇";
+}
+function sfx(ms){
+  if(!AC||!musicOn)return;
+  try{var t=AC.currentTime;ms.forEach(function(m,i){nt(m,t+i*0.09,0.2,"sine",0.18)})}catch(e){}
+}
+$("mus").onclick=function(){started=true;musik(!musicOn)};
+document.addEventListener("pointerdown",function(e){
+  if(started)return;
+  if(e.target===$("mus"))return;
+  started=true;if(musicOn)musik(true);
+});
+
+/* ===== EMOJI MELAYANG DI LATAR ===== */
+(function(){
+  var em=["💻","🛍️","💊","🎮","📱","🧪","📣","🤖","⭐","🎓","📦","🎨"];
+  for(var i=0;i<16;i++){
+    var s=document.createElement("span");s.className="fl";s.textContent=em[i%em.length];
+    s.style.left=(Math.random()*95)+"%";s.style.fontSize=(24+Math.random()*28)+"px";
+    s.style.animationDuration=(12+Math.random()*14)+"s";s.style.animationDelay=(-Math.random()*20)+"s";
+    document.body.appendChild(s);
+  }
+})();
+
+function escH(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function setPage(css){var s=$("pgstyle");if(!s){s=document.createElement("style");s.id="pgstyle";document.head.appendChild(s)}s.textContent=css}
+
+/* ===== EXPORT KARTU (A4 dibagi 4 = A6, 10,5 x 14,85 cm) ===== */
+function kartu(){
+  var jj=last.jj,pp=last.pp;
+  var bars=["rpl","bdp","far"].map(function(k){var pct=Math.round(last.js[k]/Q.length*100);return '<div class="m'+(J[k]===jj?' top':'')+'"><span>'+J[k].s+'</span><div><i style="width:'+pct+'%"></i></div><b>'+pct+'%</b></div>'}).join("");
+  var oth=last.others.map(function(k){return P[k].e+" "+P[k].t}).join(", ")||"-";
+  return '<div class="kd"><div class="h"><b>KARTU HASIL KUIS PSB</b><span>'+escH(SCHOOL_NAME)+' · 2027/2028</span></div><div class="b"><div><div class="nm">'+escH(nama)+'</div><div class="sk">'+escH(sekolah)+'</div></div><div class="jr"><i>'+jj.e+'</i><b>'+escH(jj.n)+'</b></div><div class="pf">Profesi utama:<br><b>'+pp.e+' '+escH(pp.t)+'</b></div><div class="pf s">'+pp.l.map(escH).join(" · ")+'</div>'+bars+'<div class="pf s">Juga cocok: '+escH(oth)+'</div></div><div class="f">Info PSB · WhatsApp 0'+WA_NUMBER.slice(2)+'</div></div>';
+}
+function pngKartu(){
+  var jj=last.jj,pp=last.pp,c=document.createElement("canvas");c.width=1240;c.height=1748;
+  var x=c.getContext("2d"),F="system-ui,Segoe UI,Roboto,sans-serif";
+  function T(t,px,y,col,bold,al){x.font=(bold?"bold ":"")+px+"px "+F;x.fillStyle=col;x.textAlign=al||"left";x.fillText(t,al==="center"?620:80,y)}
+  function W(t,px,y,col,bold,lh){
+    x.font=(bold?"bold ":"")+px+"px "+F;var w=t.split(" "),l="",ly=y;
+    w.forEach(function(s){var tt=l?l+" "+s:s;if(x.measureText(tt).width>1040&&l){T(l,px,ly,col,bold,"center");ly+=lh;l=s}else l=tt});
+    T(l,px,ly,col,bold,"center");return ly+lh;
+  }
+  x.fillStyle="#fff";x.fillRect(0,0,1240,1748);
+  x.fillStyle="#1d4ed8";x.fillRect(0,0,1240,250);x.fillStyle="#facc15";x.fillRect(0,250,1240,24);
+  T("KARTU HASIL KUIS PSB",64,100,"#facc15",1,"center");
+  T(SCHOOL_NAME,38,165,"#fff",0,"center");T("PSB 2027/2028",38,220,"#fff",0,"center");
+  T(nama,88,400,"#1e3a8a",1);T(sekolah,44,462,"#51607f",0);
+  x.fillStyle="#fef9c3";x.fillRect(80,510,1080,330);x.strokeStyle="#1d4ed8";x.lineWidth=6;x.strokeRect(80,510,1080,330);
+  T(jj.e,130,650,"#000",0,"center");
+  W(jj.n,52,735,"#1e3a8a",1,60);
+  T("Profesi utama",36,930,"#51607f",0);
+  W(pp.e+" "+pp.t,48,1000,"#1e3a8a",1,56);
+  ["rpl","bdp","far"].forEach(function(k,i){
+    var y=1130+i*70,pct=Math.round(last.js[k]/Q.length*100);
+    T(J[k].s,34,y,"#0f1f45",0);
+    x.fillStyle="#d6e2fb";x.fillRect(400,y-28,600,32);
+    x.fillStyle=J[k]===jj?"#facc15":"#1d4ed8";x.fillRect(400,y-28,6*pct,32);
+    T(pct+"%",34,y,"#0f1f45",1);
+  });
+  var oth=last.others.map(function(k){return P[k].t}).join(", ")||"-";
+  W("Juga cocok: "+oth,36,1440,"#51607f",0,48);
+  x.fillStyle="#facc15";x.fillRect(0,1628,1240,120);
+  T("Info PSB · WhatsApp 0"+WA_NUMBER.slice(2),44,1700,"#1e3a8a",1,"center");
+  var a=document.createElement("a");a.href=c.toDataURL("image/png");a.download="kartu-"+(nama||"hasil")+".png";
+  document.body.appendChild(a);a.click();a.remove();
+  var n=$("pvnote");if(n){n.innerHTML="Gambar kartu dikirim ke unduhan. Jika tidak terunduh, buka file <b>kuis-jurusan.html</b> langsung di browser (klik dua kali).";n.style.display="block"}
+}
+function exportKartu(){
+  if(!last)return;
+  $("pv").innerHTML='<div class="tools"><button id="e4">Cetak 4 kartu / A4</button><button id="e1">Cetak 1 kartu (A6)</button><button id="ep">Unduh PNG</button><button class="sec" id="eb">Kembali</button></div><div id="pvnote" style="display:none;max-width:760px;margin:0 auto 12px;background:#fff8d6;border:2px solid #facc15;border-radius:10px;padding:10px 14px;font-size:.9rem;color:#5b4700">Jendela cetak diblokir oleh tampilan ini. Coba tekan <b>Ctrl + P</b>, atau buka file <b>kuis-jurusan.html</b> langsung di browser (klik dua kali).</div><div id="kprev" style="overflow:auto;display:flex;justify-content:center;padding:6px">'+kartu()+'</div><div id="kprint" class="kds"></div>';
+  $("e4").onclick=function(){setPage("@page{size:A4;margin:0}");$("kprint").className="kds";$("kprint").innerHTML=kartu()+kartu()+kartu()+kartu();doPrint()};
+  $("e1").onclick=function(){setPage("@page{size:105mm 148mm;margin:0}");$("kprint").className="kds one";$("kprint").innerHTML=kartu();doPrint()};
+  $("ep").onclick=pngKartu;
+  $("eb").onclick=function(){$("pv").classList.add("hide")};
+  $("pv").classList.remove("hide");$("pv").scrollTop=0;
+}
+$("export").onclick=exportKartu;
+
+var last=null;
+$("cetak").onclick=function(){
+  if(!last)return;
+  var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})};
+  var tgl=new Date().toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"});
+  var jj=last.jj,pp=last.pp;
+  var bars=["rpl","bdp","far"].map(function(k){var pct=Math.round(last.js[k]/Q.length*100);return '<div class="m'+(J[k]===jj?' top':'')+'"><span>'+J[k].s+'</span><div><i style="width:'+pct+'%"></i></div><b>'+pct+'%</b></div>'}).join("");
+  var oth=last.others.map(function(k){return P[k].e+" "+P[k].t}).join(", ")||"-";
+  $("pv").innerHTML='<div class="tools"><button id="pvp">Cetak</button><button class="sec" id="pvb">Kembali</button></div><div id="pvnote" style="display:none;max-width:760px;margin:0 auto 12px;background:#fff8d6;border:2px solid #facc15;border-radius:10px;padding:10px 14px;font-size:.9rem;color:#5b4700">Jendela cetak diblokir oleh tampilan ini. Coba tekan <b>Ctrl + P</b>, atau buka file <b>kuis-jurusan.html</b> langsung di browser (klik dua kali) agar tombol Cetak berfungsi.</div><div class="sheet"><div class="sh"><b>HASIL KUIS PSB 2027/2028</b>'+esc(SCHOOL_NAME)+'</div><div class="sb"><table><tr><td>Nama</td><td><b>'+esc(nama)+'</b></td></tr><tr><td>Asal sekolah</td><td>'+esc(sekolah)+'</td></tr><tr><td>Tanggal</td><td>'+tgl+'</td></tr><tr><td>Jurusan cocok</td><td><b>'+jj.e+' '+esc(jj.n)+'</b><br>'+esc(jj.d)+'</td></tr></table>'+bars+'<table style="margin-top:12px"><tr><td>Profesi utama</td><td><b>'+pp.e+' '+esc(pp.t)+'</b><br>'+esc(pp.d)+'</td></tr><tr><td>Yang dipelajari</td><td>'+pp.l.map(esc).join("; ")+'</td></tr><tr><td>Juga cocok</td><td>'+esc(oth)+'</td></tr><tr><td>Setelah lulus</td><td>'+esc(jj.p)+'</td></tr></table></div></div>';
+  setPage("@page{size:A4;margin:1cm}");
+  $("pv").classList.remove("hide");
+  $("pv").scrollTop=0;
+  $("pvb").onclick=function(){$("pv").classList.add("hide")};
+  $("pvp").onclick=doPrint;
+  doPrint();
+};
+$("ulang").onclick=function(){$("nama").value="";$("sekolah").value="";show("s-start")};
+</script>
+</body>
+</html>
